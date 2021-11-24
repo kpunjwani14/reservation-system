@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import table from '../../../tableimg.jpg'
 import DateAdapter from '@mui/lab/AdapterDateFns';
@@ -21,6 +21,7 @@ import {
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { v4 as uuidv4 } from 'uuid';
 
 export const SearchTableForm = () => {
     const init = {
@@ -37,13 +38,18 @@ export const SearchTableForm = () => {
             time: momentTime,
             size: values.size
         }
-        console.log(searchDTO)
+        console.log(searchDTO);
 
         const errors = handleValidation(values);
+        if (Object.keys(errors).length < 1) {
+            // based on the input (searchDTO), display available tables
+        }
     }
 
     const handleValidation = (values) => {
         const errors = {};
+        const today = new Date();
+        const timeThreshold = today.setHours(today.getHours() + 2);
 
         if (!values.date) {
             errors.date = 'Must select a date';
@@ -51,15 +57,20 @@ export const SearchTableForm = () => {
         if (!values.time) {
             errors.time = 'Must select a time';
         }
+        if (values.time && values.time < timeThreshold) {
+            errors.pastTime = 'Must select a valid time';
+        }
         if (!values.size) {
             errors.size = 'Must select party size';
         }
 
         const missingValues = Object.values(errors);
         if (missingValues.length) {
-            const errorMessage = <>{missingValues.map((x) => { <div>{x}</div> })}</>
+            const errorMessage = <>{missingValues.map((x) => <div key={uuidv4()}>{x}</div>)}</>
             toast.error(errorMessage);
         }
+
+        return errors;
     }
 
     return (
