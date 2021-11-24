@@ -1,12 +1,12 @@
 import React from 'react';
 import { HomeNavbar } from './Components/HomeNavbar';
-import { SearchTableCard } from './Components/SearchTableCard';
+import { SearchTableForm } from './Components/SearchTableForm';
 
 export const Homepage = () => {
     return (
         <div>
             <HomeNavbar />
-            <SearchTableCard />
+            <SearchTableForm />
         </div>
     )
 }
