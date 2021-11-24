@@ -49,7 +49,9 @@ export const SearchTableForm = () => {
     const handleValidation = (values) => {
         const errors = {};
         const today = new Date();
-        const timeThreshold = today.setHours(today.getHours() + 2);
+        const timeThreshold = today.setHours(today.getHours() + 1);
+
+
 
         if (!values.date) {
             errors.date = 'Must select a date';
@@ -57,8 +59,11 @@ export const SearchTableForm = () => {
         if (!values.time) {
             errors.time = 'Must select a time';
         }
-        if (values.time && values.time < timeThreshold) {
-            errors.pastTime = 'Must select a valid time';
+        if (values.date && values.time) {
+            const dateTime = moment(new Date(values.date)).format('MM/DD/YYYY') + ' ' + moment(new Date(values.time)).format('hh:mm a')
+            if (new Date(dateTime) < new Date(timeThreshold)) {
+                errors.pastTime = 'Can only reserve tables an hour from now';
+            }
         }
         if (!values.size) {
             errors.size = 'Must select party size';
@@ -107,6 +112,7 @@ export const SearchTableForm = () => {
                                             value={props.values.time}
                                             onChange={x => props.setFieldValue('time', x)}
                                             renderInput={(params) => <TextField {...params} />}
+                                            minutesStep={30}
                                         />
                                     </LocalizationProvider>
                                     <Box sx={{ minWidth: 120 }}>
