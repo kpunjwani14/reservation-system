@@ -1,12 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Homepage } from './Pages/Homepage';
-
+import { Routes } from './Routes/Routes';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <div>
-      <Homepage />
+      <Routes />
+      <ToastContainer />
     </div>
   );
 }
