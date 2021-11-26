@@ -19,7 +19,7 @@ import {
     Button
 } from '@mui/material';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -43,6 +43,8 @@ export const SearchTableForm = () => {
         const errors = handleValidation(values);
         if (Object.keys(errors).length < 1) {
             // based on the input (searchDTO), display available tables
+            const tables = [2, 4, 6];
+
         }
     }
 
@@ -50,8 +52,6 @@ export const SearchTableForm = () => {
         const errors = {};
         const today = new Date();
         const timeThreshold = today.setHours(today.getHours() + 1);
-
-
 
         if (!values.date) {
             errors.date = 'Must select a date';
@@ -132,14 +132,13 @@ export const SearchTableForm = () => {
                                             </Select>
                                         </FormControl>
                                     </Box>
-                                    <Button onClick={props.handleSubmit}>Search</Button>
+                                    <Button onClick={props.handleSubmit}>Find a table</Button>
                                 </Stack>
                             </div>
                         )}
                     </Formik>
                 </Card.Body>
             </Card>
-            <ToastContainer />
         </div >
     )
 }
