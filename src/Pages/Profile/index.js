@@ -25,28 +25,28 @@ const style = {
 
 export const Profile = ({ closeMenu }) => {
     const [profileInfo, setProfileInfo] = useState({});
-    // useEffect(() => {
-    //     // get data from the db if existing user
-    //     const dbInfo = {
-    //         email: '1',
-    //         password: '1',
-    //         fullName: 'k',
-    //         phone: '1',
-    //         mailing: '1',
-    //         mailingCity: '1',
-    //         mailingState: '1',
-    //         mailingZip: '1',
-    //         isBillingSame: false,
-    //         card: '1',
-    //         exp: '1',
-    //         code: '1',
-    //         billing: '1',
-    //         billingCity: '1',
-    //         billingState: '1',
-    //         billingZip: '1',
-    //     }
-    //     setProfileInfo(dbInfo);
-    // }, [])
+    useEffect(() => {
+        // get data from the db if existing user
+        const dbInfo = {
+            email: '1',
+            password: '1',
+            fullName: 'k',
+            phone: '1',
+            mailing: '1',
+            mailingCity: '1',
+            mailingState: '1',
+            mailingZip: '1',
+            isBillingSame: false,
+            card: '1',
+            exp: '1',
+            code: '1',
+            billing: '1',
+            billingCity: '1',
+            billingState: '1',
+            billingZip: '1',
+        }
+        setProfileInfo(dbInfo);
+    }, [])
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
