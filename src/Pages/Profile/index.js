@@ -1,11 +1,12 @@
 import React from 'react';
+import { ProfileForm } from './ProfileForm';
 import {
     Box,
-    Button,
     Typography,
-    Modal
+    Modal,
+    MenuItem
 } from '@mui/material';
-import { ProfileForm } from '../Profile/ProfileForm';
+import { Rewards } from './Rewards';
 
 const style = {
     position: 'absolute',
@@ -22,14 +23,19 @@ const style = {
     display: 'block'
 };
 
-export const Register = () => {
+export const Profile = ({ closeMenu }) => {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        closeMenu();
+        setOpen(true);
+    }
     const handleClose = () => setOpen(false);
 
     return (
         <div>
-            <Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>
+            <MenuItem onClick={handleOpen}>
+                Profile
+            </MenuItem>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -38,9 +44,10 @@ export const Register = () => {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-                        Sign up
+                        My Info
                     </Typography>
-                    <ProfileForm buttonText={"Sign up"} />
+                    <Rewards />
+                    <ProfileForm buttonText={"Save"} />
                 </Box>
             </Modal>
         </div>

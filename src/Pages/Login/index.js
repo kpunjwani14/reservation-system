@@ -17,10 +17,12 @@ const style = {
     p: 4
 };
 
-
 export const Login = () => {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true);
+        setIsValid(true);
+    };
     const handleClose = () => setOpen(false);
 
     const [email, setEmail] = useState("");
@@ -50,7 +52,7 @@ export const Login = () => {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleOpen}>Sign in</Button>
+            <Button color="info" variant="contained" onClick={handleOpen}>Sign in</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
