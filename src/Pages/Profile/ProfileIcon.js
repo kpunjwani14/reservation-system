@@ -49,7 +49,7 @@ export const ProfileIcon = ({ auth, setAuth }) => {
                     >
 
                         <Profile closeMenu={handleClose} />
-                        <MenuItem onClick={handleClose, signOut}>Sign out</MenuItem>
+                        <MenuItem onClick={handleClose && signOut}>Sign out</MenuItem>
                     </Menu>
                 </div>
             )

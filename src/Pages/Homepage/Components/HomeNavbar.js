@@ -17,15 +17,19 @@ export const HomeNavbar = () => {
                     <FontAwesomeIcon icon={faUtensils} />
                     <span style={{ margin: "5px" }}>ReserveTable</span>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
                 {auth
                     ? <ProfileIcon auth={auth} setAuth={setAuth} />
-                    : <Navbar.Collapse className="justify-content-end">
-                        <Stack spacing={1} direction="row">
-                            <Login />
-                            <Register />
-                        </Stack>
-                    </Navbar.Collapse>
+                    : (
+                        <>
+                            <Navbar.Toggle aria-controls="navbarScroll" />
+                            <Navbar.Collapse className="justify-content-end">
+                                <Stack spacing={1} direction="row">
+                                    <Login />
+                                    <Register />
+                                </Stack>
+                            </Navbar.Collapse>
+                        </>
+                    )
                 }
             </Container>
         </Navbar >

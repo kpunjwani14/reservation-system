@@ -40,7 +40,7 @@ export const Register = () => {
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
                         Sign up
                     </Typography>
-                    <ProfileForm buttonText={"Sign up"} />
+                    <ProfileForm buttonText={"Sign up"} isRegisterModal />
                 </Box>
             </Modal>
         </div>
