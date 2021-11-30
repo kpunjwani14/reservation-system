@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchTableForm } from './Components/SearchTableForm';
+import { SearchTableForm } from './SearchTableForm';
 
 export const Homepage = () => {
     return (

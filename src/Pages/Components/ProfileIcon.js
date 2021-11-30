@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { Profile } from './index';
+import { Profile } from '../Profile/index';
 
 export const ProfileIcon = ({ auth, setAuth }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
