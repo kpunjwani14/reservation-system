@@ -25,25 +25,26 @@ const style = {
 
 export const Profile = ({ closeMenu }) => {
     const [profileInfo, setProfileInfo] = useState({});
+
     useEffect(() => {
         // get data from the db if existing user
         const dbInfo = {
-            email: '1',
-            password: '1',
+            email: 'k@test.com',
+            password: '123',
             fullName: 'k',
-            phone: '1',
-            mailing: '1',
-            mailingCity: '1',
-            mailingState: '1',
-            mailingZip: '1',
+            phone: '(111) 111-1111',
+            mailing: '123',
+            mailingCity: 'Paris',
+            mailingState: 'Texas',
+            mailingZip: '11111',
             isBillingSame: false,
-            card: '1',
-            exp: '1',
-            code: '1',
-            billing: '1',
-            billingCity: '1',
-            billingState: '1',
-            billingZip: '1',
+            card: '1234123412341234',
+            exp: '10/25',
+            code: '123',
+            billing: '123',
+            billingCity: 'London',
+            billingState: 'Arkansas',
+            billingZip: '11111',
         }
         setProfileInfo(dbInfo);
     }, [])

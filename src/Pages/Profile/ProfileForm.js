@@ -1,13 +1,24 @@
 import React from 'react';
-import { TextField, Stack } from '@mui/material';
+import {
+    TextField,
+    Stack,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    FormHelperText
+} from '@mui/material';
 import { Formik } from 'formik';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
+import { StatesData } from './StatesData';
 
 export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
+    const states = StatesData.map(state => state.Name);
     const init = profileInfo || {
         email: '',
         password: '',
@@ -35,40 +46,41 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
         fullName: Yup.string().required('Name is required'),
         email: isRegisterModal && Yup.string().email('Invalid email').required('Email is required'),
         password: isRegisterModal && Yup.string().required('Password is required'),
-        phone: Yup.string().required('Phone Number is required'),
+        phone: Yup.string().required('Phone Number is required').matches(/^\(\d{3}\) \d{3}-\d{4}$/i, "Phone Number must be in '(000) 000-0000' format"),
         mailing: Yup.string().required('Mailing Address is required'),
         mailingCity: Yup.string().required('City is required'),
         mailingState: Yup.string().required('State is required'),
-        mailingZip: Yup.string().required('Zip Code is required'),
-        card: Yup.string().required('Card Number is required'),
-        exp: Yup.string().required('Exp Date is required'),
-        code: Yup.string().required('Security Code is required'),
+        mailingZip: Yup.string().required('Zip Code is required').min(5, "Invalid Zip Code").max(5, "Invalid Zip Code"),
+        card: Yup.string().required('Card Number is required').matches(/^[0-9]{16}$/, "Card Number must be 16 digits"),
+        exp: Yup.string().required('Exp Date is required').matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Invalid Exp Date"),
+        code: Yup.string().required('Security Code is required').matches(/^[0-9]{3}$/, "Security Code must be 3 digits"),
         isBillingSame: Yup.bool(),
         billing: Yup.string()
             .when('isBillingSame', {
-                is: (isBillingSame) => isBillingSame === false,
+                is: (isBillingSame) => !isBillingSame,
                 then: Yup.string()
                     .required('Billing Address is required')
             }),
         billingCity: Yup.string()
             .when('isBillingSame', {
-                is: (isBillingSame) => isBillingSame === false,
+                is: (isBillingSame) => !isBillingSame,
                 then: Yup.string()
                     .required('City is required')
             }),
         billingState: Yup.string()
             .when('isBillingSame', {
-                is: (isBillingSame) => isBillingSame === false,
+                is: (isBillingSame) => !isBillingSame,
                 then: Yup.string()
                     .required('State is required')
             }),
         billingZip: Yup.string()
             .when('isBillingSame', {
-                is: (isBillingSame) => isBillingSame === false,
+                is: (isBillingSame) => !isBillingSame,
                 then: Yup.string()
                     .required('Zip Code is required')
-            }),
-
+                    .min(5, "Invalid Zip Code")
+                    .max(5, "Invalid Zip Code")
+            })
     });
 
     return (
@@ -147,15 +159,22 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
                                 error={props.touched.mailingCity && Boolean(props.errors.mailingCity)}
                                 helperText={props.touched.mailingCity && props.errors.mailingCity}
                             />
-                            <TextField
-                                required
-                                name="mailingState"
-                                label="State"
-                                value={props.values.mailingState}
-                                onChange={props.handleChange}
-                                error={props.touched.mailingState && Boolean(props.errors.mailingState)}
-                                helperText={props.touched.mailingState && props.errors.mailingState}
-                            />
+                            <FormControl>
+                                <InputLabel id="demo-simple-select-label">State</InputLabel>
+                                <Select
+                                    required
+                                    name="mailingState"
+                                    value={props.values.mailingState}
+                                    label="State"
+                                    onChange={props.handleChange}
+                                    error={props.touched.mailingState && Boolean(props.errors.mailingState)}
+                                >
+                                    {states && states.map(x => <MenuItem key={uuidv4()} value={x}>{x}</MenuItem>)}
+                                </Select>
+                                {props.touched.mailingState && Boolean(props.errors.mailingState) &&
+                                    <FormHelperText error={true}>{props.errors.mailingState}</FormHelperText>
+                                }
+                            </FormControl>
                             <TextField
                                 required
                                 name="mailingZip"
@@ -226,15 +245,22 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
                                         error={props.touched.billingCity && Boolean(props.errors.billingCity)}
                                         helperText={props.touched.billingCity && props.errors.billingCity}
                                     />
-                                    <TextField
-                                        required
-                                        name="billingState"
-                                        label="State"
-                                        value={props.values.billingState}
-                                        onChange={props.handleChange}
-                                        error={props.touched.billingState && Boolean(props.errors.billingState)}
-                                        helperText={props.touched.billingState && props.errors.billingState}
-                                    />
+                                    <FormControl>
+                                        <InputLabel id="demo-simple-select-label">State</InputLabel>
+                                        <Select
+                                            required
+                                            name="billingState"
+                                            value={props.values.billingState}
+                                            label="State"
+                                            onChange={props.handleChange}
+                                            error={props.touched.billingState && Boolean(props.errors.billingState)}
+                                        >
+                                            {states && states.map(x => <MenuItem key={uuidv4()} value={x}>{x}</MenuItem>)}
+                                        </Select>
+                                        {props.touched.billingState && Boolean(props.errors.billingState) &&
+                                            <FormHelperText error={true}>{props.errors.billingState}</FormHelperText>
+                                        }
+                                    </FormControl>
                                     <TextField
                                         required
                                         name="billingZip"
