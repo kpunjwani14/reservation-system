@@ -11,21 +11,19 @@ import {
 } from '@mui/material';
 import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { v4 as uuidv4 } from 'uuid';
 
 export const AvailableTables = ({ tables }) => {
-    const [selectedTables, setSelectedTables] = useState([]);
-
-    const handleSelectedTables = (event, tables) => {
-        setSelectedTables(tables);
-    };
+    const [checked, setChecked] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (selectedTables) {
-            console.log(selectedTables);
+
+        if (checked && checked.length < 1) {
+            toast.error('Please select a table to proceed');
         }
+        console.log(checked);
     }
 
     return (
@@ -38,26 +36,32 @@ export const AvailableTables = ({ tables }) => {
                     <Typography variant="body2" sx={{ mb: 1.5 }}>
                         You may need to select a combination of tables
                     </Typography>
-
-                    <Stack direction="row" spacing={2}>
+                    <Stack spacing={2}>
                         <form onSubmit={handleSubmit}>
-                            {tables.map((x) => (
+                            {tables.map(table => (
                                 <FormControlLabel
-                                    key={uuidv4()}
-                                    label={x}
+                                    key={table.id}
+                                    label={table.label}
                                     control={
                                         <Checkbox
-                                            key={uuidv4()}
                                             size="medium"
                                             icon={<TableRestaurantOutlinedIcon />}
                                             checkedIcon={<TableRestaurantIcon />}
+                                            checked={checked.includes(table.id)}
+                                            onChange={() => {
+                                                let found = checked.includes(table.id);
+                                                if (found) {
+                                                    setChecked(checked.filter(x => x !== table.id));
+                                                } else {
+                                                    setChecked([...checked, table.id]);
+                                                }
+                                            }}
                                         />
                                     }
                                 />
                             ))}
-
                             <CardActions style={{ justifyContent: 'center' }}>
-                                <Button type="submit" size="small">Let's go</Button>
+                                <Button type="submit">Let's go</Button>
                             </CardActions>
                         </form>
                     </Stack>

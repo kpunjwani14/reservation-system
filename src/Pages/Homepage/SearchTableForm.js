@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { React, useState } from 'react';
 import { Card } from 'react-bootstrap';
-import table from '../../../tableimg.jpg'
+import table from '../../tableimg.jpg';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import {
     LocalizationProvider,
@@ -22,7 +22,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { v4 as uuidv4 } from 'uuid';
-import { AvailableTables } from '../../AvailableTables';
+import { AvailableTables } from '../AvailableTables';
 
 export const SearchTableForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -47,7 +47,14 @@ export const SearchTableForm = () => {
         const errors = handleValidation(values);
         if (Object.keys(errors).length < 1) {
             // based on the input (searchDTO), make a call to the db and display available tables
-            const dbTables = [2, 2, 4, 6, 8];
+            const dbTables = [
+                { id: 1, label: 1 },
+                { id: 2, label: 2 },
+                { id: 3, label: 2 },
+                { id: 4, label: 4 },
+                { id: 5, label: 6 },
+                { id: 6, label: 8 }
+            ];
             setTables(dbTables);
             setIsSubmitted(true);
         } else {

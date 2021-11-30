@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Container, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { Login } from '../../Login';
-import { Register } from '../../Register';
+import { Login } from '../Login';
+import { Register } from '../Register';
 import Stack from '@mui/material/Stack';
-import { ProfileIcon } from '../../Profile/ProfileIcon';
+import { ProfileIcon } from './ProfileIcon';
 
 export const HomeNavbar = () => {
     const [auth, setAuth] = useState(true);
