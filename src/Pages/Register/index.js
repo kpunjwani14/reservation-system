@@ -1,43 +1,46 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import React from 'react';
+import {
+    Box,
+    Button,
+    Typography,
+    Modal
+} from '@mui/material';
+import { ProfileForm } from '../Profile/ProfileForm';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    overflow: 'scroll',
+    height: '85%',
+    display: 'block'
 };
-
 
 export const Register = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose2 = () => setOpen(false);
+    const handleClose = () => setOpen(false);
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleOpen}>Sign up</Button>
+            <Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>
             <Modal
                 open={open}
-                onClose={handleClose2}
+                onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
                         Sign up
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
+                    <ProfileForm buttonText={"Sign up"} isRegisterModal />
                 </Box>
             </Modal>
         </div>
