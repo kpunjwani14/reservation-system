@@ -27,6 +27,7 @@ import { AvailableTables } from '../AvailableTables';
 export const SearchTableForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [tables, setTables] = useState([]);
+    const [userSpecifications, setUserSpecifications] = useState({});
 
     const init = {
         date: null,
@@ -43,6 +44,7 @@ export const SearchTableForm = () => {
             size: values.size
         }
         console.log('searchDTO:', searchDTO);
+        setUserSpecifications(searchDTO);
 
         const errors = handleValidation(values);
         if (Object.keys(errors).length < 1) {
@@ -155,7 +157,7 @@ export const SearchTableForm = () => {
 
                     </Card.Body>
                 </Card>
-                {isSubmitted && <AvailableTables tables={tables} />}
+                {isSubmitted && <AvailableTables tables={tables} userSpecifications={userSpecifications} />}
 
             </Stack>
         </div>
