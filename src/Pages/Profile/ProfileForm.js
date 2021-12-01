@@ -16,8 +16,10 @@ import Typography from '@mui/material/Typography';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 import { StatesData } from './StatesData';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
+export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo, isReservationPage }) => {
     const states = StatesData.map(state => state.Name);
     const init = profileInfo || {
         email: '',
@@ -40,6 +42,8 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo }) => {
 
     const handleSubmit = (values) => {
         console.log(values);
+        toast.success("Success!", { autoClose: 10000 });
+        isReservationPage && toast.warn("Failure to show up will result in a $10 charge", { autoClose: 10000 });
     }
 
     const ProfileSchema = Yup.object().shape({

@@ -14,16 +14,18 @@ import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const AvailableTables = ({ tables }) => {
+export const AvailableTables = ({ tables, userSpecifications }) => {
     const [checked, setChecked] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(checked);
 
         if (checked && checked.length < 1) {
             toast.error('Please select a table to proceed');
+        } else {
+            // Redirect to '/reservation' with userSpecifications prop (date, time, size)
         }
-        console.log(checked);
     }
 
     return (

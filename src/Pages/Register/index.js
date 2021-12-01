@@ -3,7 +3,8 @@ import {
     Box,
     Button,
     Typography,
-    Modal
+    Modal,
+    Link
 } from '@mui/material';
 import { ProfileForm } from '../Profile/ProfileForm';
 
@@ -22,14 +23,15 @@ const style = {
     display: 'block'
 };
 
-export const Register = () => {
+export const Register = ({ isReservationPage }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return (
         <div>
-            <Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>
+            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign up</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to use your saved payment and account info.</p></div>)
+                || (<Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>)}
             <Modal
                 open={open}
                 onClose={handleClose}

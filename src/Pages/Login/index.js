@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { TextField, Stack } from '@mui/material';
+import { TextField, Stack, Link } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -17,7 +17,7 @@ const style = {
     p: 4
 };
 
-export const Login = () => {
+export const Login = ({ isReservationPage }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -52,7 +52,8 @@ export const Login = () => {
 
     return (
         <div>
-            <Button color="info" variant="contained" onClick={handleOpen}>Sign in</Button>
+            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign in</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to earn points for this reservation.</p></div>)
+                || (<Button color="info" variant="contained" onClick={handleOpen}>Sign in</Button>)}
             <Modal
                 open={open}
                 onClose={handleClose}
