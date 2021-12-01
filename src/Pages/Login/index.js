@@ -52,7 +52,7 @@ export const Login = ({ isReservationPage }) => {
 
     return (
         <div>
-            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign in</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to earn points for this reservation.</p></div>)
+            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign in</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to use your saved payment and account info.</p></div>)
                 || (<Button color="info" variant="contained" onClick={handleOpen}>Sign in</Button>)}
             <Modal
                 open={open}

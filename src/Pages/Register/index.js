@@ -30,7 +30,7 @@ export const Register = ({ isReservationPage }) => {
 
     return (
         <div>
-            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign up</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to use your saved payment and account info.</p></div>)
+            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign up</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to earn points for this reservation.</p></div>)
                 || (<Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>)}
             <Modal
                 open={open}
