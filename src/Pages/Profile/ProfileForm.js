@@ -18,36 +18,65 @@ import { v4 as uuidv4 } from 'uuid';
 import { StatesData } from './StatesData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
+import { values } from 'sequelize/dist/lib/operators';
+import { json } from 'sequelize/dist';
+import { ClosedCaptionDisabledOutlined } from '@mui/icons-material';
 
-export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo, isReservationPage }) => {
+export const ProfileForm = ({ BillingAddress, BillingCity, buttonText, isRegisterModal, profileInfo, isReservationPage, onClose }) => {
+    
     const states = StatesData.map(state => state.Name);
-    const init = profileInfo || {
+    const init =  {
         email: '',
         password: '',
-        fullName: '',
-        phone: '',
-        mailing: '',
-        mailingCity: '',
-        mailingState: '',
-        mailingZip: '',
+        name: profileInfo.name,
+        phone: profileInfo.phone,
+        mailing: profileInfo.mailing,
+        mailingCity: profileInfo.mailingCity,
+        mailingState: profileInfo.mailingState,
+        mailingZip: profileInfo.zip,
         isBillingSame: true,
-        card: '',
-        exp: '',
-        code: '',
+        card:profileInfo.cardNumber,
+        exp: profileInfo.exp,
+        code: profileInfo.code,
         billing: '',
         billingCity: '',
         billingState: '',
         billingZip: '',
     }
+    
+    const handleSubmit = async (values) => {
+        if(isReservationPage){
+            toast.success('Successful Reservation')
+        }
+        else{
+        const replacer = (key, val)=>{
+            if(values.isBillingSame && key.startsWith('billing') )
+                return undefined
+            
+            else
+                return val
+        }
+        //console.log(values);
+        try{
+            
 
-    const handleSubmit = (values) => {
-        console.log(values);
-        toast.success("Success!", { autoClose: 10000 });
-        isReservationPage && toast.warn("Failure to show up will result in a $10 charge", { autoClose: 10000 });
+            let result = await axios.post('http://localhost:3001/register',{...JSON.parse(JSON.stringify(values,replacer)), isGuest:false})
+            
+            toast.success("Success!", { autoClose: 10000 });
+            onClose()
+            
+        }
+        catch(err){
+            console.log(err.response.data)
+            toast.error("Looks like an Error Occured Please Try Again!", { autoClose: 10000 });
+        }
+        
+        isReservationPage && toast.warn("Failure to show up will result in a $10 charge", { autoClose: 10000 });}
     }
 
     const ProfileSchema = Yup.object().shape({
-        fullName: Yup.string().required('Name is required'),
+        name: Yup.string().required('Name is required'),
         email: isRegisterModal && Yup.string().email('Invalid email').required('Email is required'),
         password: isRegisterModal && Yup.string().required('Password is required'),
         phone: Yup.string().required('Phone Number is required').matches(/^\(\d{3}\) \d{3}-\d{4}$/i, "Phone Number must be in '(000) 000-0000' format"),
@@ -90,6 +119,7 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo, isReserv
     return (
         <div>
             <Formik
+            enableReinitialize
                 initialValues={init}
                 validationSchema={ProfileSchema}
                 onSubmit={handleSubmit}
@@ -102,13 +132,13 @@ export const ProfileForm = ({ buttonText, isRegisterModal, profileInfo, isReserv
                             </Typography>
                             <TextField
                                 required
-                                name="fullName"
+                                name="name"
                                 label="Name"
                                 mt={2}
-                                value={props.values.fullName}
+                                value={props.values.name}
                                 onChange={props.handleChange}
-                                error={props.touched.fullName && Boolean(props.errors.fullName)}
-                                helperText={props.touched.fullName && props.errors.fullName}
+                                error={props.touched.name && Boolean(props.errors.name)}
+                                helperText={props.touched.name && props.errors.name}
                             />
                             {isRegisterModal &&
                                 <>

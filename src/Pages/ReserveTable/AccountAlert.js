@@ -11,10 +11,12 @@ export const AccountAlert = () => {
         <div>
             <Alert icon={false} severity="info">
                 <Login isReservationPage />
-                <Divider>
-                    OR
-                </Divider>
+                
                 <Register isReservationPage />
+                
+                Minimum of $10 extra will be charged to those that do not show up to their reservation
+                
+
             </Alert>
         </div>
     )

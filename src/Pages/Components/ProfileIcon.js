@@ -4,22 +4,36 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Profile } from '../Profile/index';
+import Cookies from 'js-cookie'
 
 export const ProfileIcon = ({ auth, setAuth }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    const [isLoading,setLoading]= React.useState(true)
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+
     };
 
-    const signOut = () => setAuth(false);
+    const signOut = () => {
+        setAuth(false);
+        Cookies.set('access_token',null)
+        Cookies.set('id',null)
+    
+    }
+    React.useEffect(() => {
+        setLoading(false)
+    },[])
+
+    
 
     return (
-        <div>
+        
+        !isLoading? <div>
+
             {auth && (
                 <div>
                     <IconButton
@@ -54,6 +68,6 @@ export const ProfileIcon = ({ auth, setAuth }) => {
                 </div>
             )
             }
-        </div >
+        </div >:<></>
     )
 }

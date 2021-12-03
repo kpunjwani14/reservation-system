@@ -3,6 +3,7 @@ import { React, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import table from '../../tableimg.jpg';
 import DateAdapter from '@mui/lab/AdapterDateFns';
+import axios from 'axios'
 import {
     LocalizationProvider,
     DatePicker,
@@ -35,9 +36,9 @@ export const SearchTableForm = () => {
         size: 2
     }
 
-    const handleSubmit = (values) => {
-        const momentDate = moment(values.date).format('M/D/YYYY')
-        const momentTime = moment(values.time).format('h:mm a')
+    const handleSubmit = async (values) => {
+        const momentDate = moment(values.date).format('YYYY/M/D')
+        const momentTime = moment(values.time).format('HH:mm')
         const searchDTO = {
             date: momentDate,
             time: momentTime,
@@ -49,7 +50,7 @@ export const SearchTableForm = () => {
         const errors = handleValidation(values);
         if (Object.keys(errors).length < 1) {
             // based on the input (searchDTO), make a call to the db and display available tables
-            const dbTables = [
+            let dbTables = [
                 { id: 1, label: 1 },
                 { id: 2, label: 2 },
                 { id: 3, label: 2 },
@@ -57,6 +58,21 @@ export const SearchTableForm = () => {
                 { id: 5, label: 6 },
                 { id: 6, label: 8 }
             ];
+            try{
+                //let result = await axios.get(`http://localhost:3001/reservationSlots?date=${momentDate}&time=${momentTime}&size=${searchDTO.size}`)
+                //console.log(result.data)
+                for (var i = dbTables.length - 1; i >= 0; i--) {
+                    
+                    if (dbTables[i].label  < values.size) { 
+                        dbTables.splice(i, 1);
+                    }
+                }
+                console.log(dbTables)
+                
+            }
+            catch(err){
+                console.log(err)
+            }
             setTables(dbTables);
             setIsSubmitted(true);
         } else {

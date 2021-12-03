@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie'
+//import Redirect from 'react-router-dom'
 import {
     Card,
     Typography,
@@ -13,23 +15,33 @@ import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutl
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const AvailableTables = ({ tables, userSpecifications }) => {
     const [checked, setChecked] = useState([]);
+    const [redirect,setRedirect] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(checked);
+        console.log(tables.find(x => x.id == checked[0]));
+        
 
         if (checked && checked.length < 1) {
             toast.error('Please select a table to proceed');
         } else {
             // Redirect to '/reservation' with userSpecifications prop (date, time, size)
+            let totTables = tables.filter(t =>{
+                return tables.find(t => checked.includes(t.id) ) !=null
+            })
+            console.log(totTables)
+            console.log(Cookies.get('id'))
+            setRedirect(true)
+            
         }
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+       redirect? <Redirect to={`/reservation?date=${userSpecifications.date}&time=${userSpecifications.time}&size=${userSpecifications.size}`}/>: <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Card>
                 <CardContent>
                     <Typography variant="h6" component="div">

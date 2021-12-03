@@ -3,8 +3,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { TextField, Stack, Link } from '@mui/material';
-
+import axios from 'axios'
+import Cookies from 'js-cookie'
 const style = {
     position: 'absolute',
     top: '50%',
@@ -17,7 +20,7 @@ const style = {
     p: 4
 };
 
-export const Login = ({ isReservationPage }) => {
+export const Login = ({ isReservationPage,isAuth,setAuth }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -31,7 +34,7 @@ export const Login = ({ isReservationPage }) => {
     const [passwordError, setPasswordError] = useState(false);
     const [isValid, setIsValid] = useState(true);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setEmailError(false);
         setPasswordError(false);
@@ -43,16 +46,32 @@ export const Login = ({ isReservationPage }) => {
             setPasswordError(true);
         }
         if (email && password) {
-            console.log(email, password);
+            //console.log(email, password);
 
-            // call to the db -> if credentials are invalid
-            setIsValid(false);
+            try{
+                let result = await axios.post('http://localhost:3001/login',{email,password})
+                toast.success('Logged in! Welcome '+result.data.name,{autoClose:10000})
+                console.log(result.data)
+                Cookies.set('access_token',result.data.token)
+                Cookies.set('id',result.data.userId)
+                console.log(Cookies.get('access_token'))
+                handleClose()
+                setIsValid(true);
+                setAuth(true)
+                
+            }
+            catch(err){
+                console.log(err)
+                //toast.error('Incorrect login! Please try again.',{autoClose:10000})
+                setIsValid(false);
+            }
+            
         }
     }
 
     return (
         <div>
-            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign in</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to use your saved payment and account info.</p></div>)
+            {(isReservationPage &&  <div style={{ display: "inline-flex" }}></div>)
                 || (<Button color="info" variant="contained" onClick={handleOpen}>Sign in</Button>)}
             <Modal
                 open={open}

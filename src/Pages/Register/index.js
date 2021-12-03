@@ -27,10 +27,13 @@ export const Register = ({ isReservationPage }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const closeCall = () =>{
+        //console.log('checking this')
+        handleClose()
+    }
     return (
         <div>
-            {(isReservationPage && <div style={{ display: "inline-flex" }}><Link underline="hover" href="#" onClick={handleOpen}>Sign up</Link><p style={{ marginLeft: "5px", marginBottom: "0px" }}>to earn points for this reservation.</p></div>)
+            {(isReservationPage &&<div style={{ display: "inline-flex" }}></div>)
                 || (<Button variant="outlined" color="info" onClick={handleOpen}>Sign up</Button>)}
             <Modal
                 open={open}
@@ -42,7 +45,7 @@ export const Register = ({ isReservationPage }) => {
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
                         Sign up
                     </Typography>
-                    <ProfileForm buttonText={"Sign up"} isRegisterModal />
+                    <ProfileForm buttonText={"Sign up"} isRegisterModal onClose={closeCall} />
                 </Box>
             </Modal>
         </div>
